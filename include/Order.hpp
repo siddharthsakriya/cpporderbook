@@ -7,13 +7,14 @@
 class Order {
     private:
         int orderId;
-        double volume;
+        long volume;
+        double price; // Assuming price is needed for matching
         OrderSide side;
         OrderType type;
 
     public:
-        Order(int id, double vol, OrderSide s, OrderType t)
-            : orderId(id), volume(vol), side(s), type(t) {}
+        Order(int id, double vol, double pr, OrderSide s, OrderType t)
+            : orderId(id), volume(vol), price(pr), side(s), type(t) {}
 
         int getOrderId() const {
             return orderId;
@@ -29,6 +30,10 @@ class Order {
 
         OrderType getType() const {
             return type;
+        }
+
+        double getPrice() const {
+            return price;
         }
 };
 

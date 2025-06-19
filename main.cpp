@@ -1,7 +1,6 @@
-#include "MyClass.hpp"
+#include <iostream>
 
 int main() {
-    MyClass obj;
-    obj.say_hello();
+    std::cout << "Hello, world!" << std::endl;
     return 0;
 }

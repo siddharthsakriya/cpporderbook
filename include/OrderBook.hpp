@@ -14,10 +14,10 @@ class OrderBook {
         
     public:
         void addOrder(const Order& order);
-        void isSellEmpty() const;
-        void isBuyEmpty() const;
-        void getBestBuyPrice() const;
-        void getBestSellPrice() const;
+        bool isSellEmpty() const;
+        bool isBuyEmpty() const;
+        double getBestBuyPrice() const;
+        double getBestSellPrice() const;
         void removeTopBuyOrder();
         void removeTopSellOrder();
 };
