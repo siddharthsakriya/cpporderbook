@@ -8,7 +8,7 @@
 class OrderBook {
     private:
         std::priority_queue<double> buyOrders; 
-        std::priority_queue<double> sellOrders; 
+        std::priority_queue<double, std::vector<double>, std::greater<double>> sellOrders; 
         std::map<double, std::queue<Order>> buyOrderLevels; 
         std::map<double, std::queue<Order>> sellOrderLevels;
         
