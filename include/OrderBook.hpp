@@ -3,17 +3,22 @@
 
 #include <queue>
 #include <map>
+#include <vector>
+#include <memory>
+
 #include "Order.hpp"
 
 class OrderBook {
     private:
         std::priority_queue<double> buyOrders; 
-        std::priority_queue<double, std::vector<double>, std::greater<double>> sellOrders; 
-        std::map<double, std::queue<Order>> buyOrderLevels; 
-        std::map<double, std::queue<Order>> sellOrderLevels;
+        std::priority_queue<double, std::vector<double>, std::greater<double>> sellOrders;
+
+        std::map<double, std::queue<std::shared_ptr<Order>>> buyOrderLevels; 
+        std::map<double, std::queue<std::shared_ptr<Order>>> sellOrderLevels;
         
     public:
-        void addOrder(const Order& order);
+        void addOrder(std::shared_ptr<Order> order);
+
         bool isSellEmpty() const;
         bool isBuyEmpty() const;
         double getBestBuyPrice() const;

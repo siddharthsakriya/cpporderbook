@@ -2,15 +2,17 @@
 #define MATCHINGENGINE_HPP
 
 #include "OrderBook.hpp"
+#include "OrderVisitor.hpp"
 
-class MatchingEngine {
+class MatchingEngine : public OrderVisitor {
     private:
         OrderBook orderBook;
         
     public:
-        // Public methods for matching engine operations
-        void processOrder(const Order& order);
-        void cancelOrder(int orderId);
+        MatchingEngine() = default;
+        void processOrder(const Order& order) { order.accept(*this); };
+        void visit(const LimitOrder& order);
+        void visit(const MarketOrder& order);
 };
 
 #endif

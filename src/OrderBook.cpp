@@ -1,19 +1,24 @@
 #include "OrderBook.hpp"
 
-void OrderBook::addOrder(const Order& order) {
-    if (order.getSide() == OrderSide::BUY) {
-        if (buyOrderLevels.count(order.getPrice()) == 0) {
-            buyOrders.push(order.getPrice());
-            buyOrderLevels[order.getPrice()] = std::queue<Order>();
+void OrderBook::addOrder(std::shared_ptr<Order> order) {
+    double price = order->getPrice();   
+    
+    if (order->getSide() == OrderSide::BUY) {
+        if(buyOrderLevels.count(price) == 0) {
+            buyOrders.push(price);
+            buyOrderLevels[price] = std::queue<std::shared_ptr<Order>>();
         }
-        buyOrderLevels[order.getPrice()].push(order);
-        
-    } else {
-        if (sellOrderLevels.count(order.getPrice()) == 0) {
-            sellOrders.push(order.getPrice());
-            sellOrderLevels[order.getPrice()] = std::queue<Order>();
+        buyOrderLevels[price].push(order);
+    }
+    else if (order->getSide() == OrderSide::SELL) {
+        if(sellOrderLevels.count(price) == 0) {
+            sellOrders.push(price);
+            sellOrderLevels[price] = std::queue<std::shared_ptr<Order>>();
         }
-        sellOrderLevels[order.getPrice()].push(order);       
+        sellOrderLevels[price].push(order);
+    }
+    else {
+        throw std::invalid_argument("Invalid order side");
     }
 }
 

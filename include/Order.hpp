@@ -2,39 +2,26 @@
 #define ORDER_HPP
 
 #include "OrderSide.hpp"
-#include "OrderType.hpp"
 
 class Order {
     private:
         int orderId;
         long volume;
-        double price; // Assuming price is needed for matching
+        double price;
         OrderSide side;
-        OrderType type;
 
     public:
-        Order(int id, double vol, double pr, OrderSide s, OrderType t)
-            : orderId(id), volume(vol), price(pr), side(s), type(t) {}
+        Order(int id, double vol, double pr, OrderSide s)
+            : orderId(id), volume(vol), price(pr), side(s) {}
 
-        int getOrderId() const {
-            return orderId;
-        }
+        virtual ~Order() = default;
 
-        double getVolume() const {
-            return volume;
-        }
+        int getOrderId() const { return orderId; }
+        double getVolume() const { return volume; }
+        OrderSide getSide() const { return side; }
+        double getPrice() const { return price; }
 
-        OrderSide getSide() const {
-            return side;
-        }
-
-        OrderType getType() const {
-            return type;
-        }
-
-        double getPrice() const {
-            return price;
-        }
+        virtual void accept(class OrderVisitor& visitor) const = 0;
 };
 
 #endif 
