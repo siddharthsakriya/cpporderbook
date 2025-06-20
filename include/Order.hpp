@@ -20,6 +20,7 @@ class Order {
         double getVolume() const { return volume; }
         OrderSide getSide() const { return side; }
         double getPrice() const { return price; }
+        void setVolume(long vol) { volume = vol; }
 
         virtual void accept(class OrderVisitor& visitor) const = 0;
 };

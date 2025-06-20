@@ -11,8 +11,9 @@ class MatchingEngine : public OrderVisitor {
     public:
         MatchingEngine() = default;
         void processOrder(const Order& order) { order.accept(*this); };
+        void printOrderBook() { orderBook.printOrderBook(); }
         void visit(const LimitOrder& order);
-        void visit(const MarketOrder& order);
+        void visit(const FokOrder& order);
 };
 
 #endif

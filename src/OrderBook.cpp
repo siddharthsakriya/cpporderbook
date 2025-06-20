@@ -39,7 +39,8 @@ double OrderBook::getBestBuyPrice() const {
 
 double OrderBook::getBestSellPrice() const {
     if (sellOrders.empty()) {
-        return 0.0; 
+        // should return infinity 
+        return INFINITY;
     }
     return sellOrders.top();
 }
@@ -65,4 +66,56 @@ void OrderBook::removeTopSellOrder() {
         }
     }   
 }
+
+std::shared_ptr<Order> OrderBook::showTopBuyOrder(double price){
+    std::queue<std::shared_ptr<Order>> orderQueue = buyOrderLevels[price];
+    if (!orderQueue.empty()) {
+        return orderQueue.front();
+    }
     
+    buyOrderLevels.erase(price);
+    buyOrders.pop();
+
+    return nullptr;
+}
+
+std::shared_ptr<Order> OrderBook::showTopSellOrder(double price){
+    std::queue<std::shared_ptr<Order>> orderQueue = sellOrderLevels[price];
+    if (!orderQueue.empty()) {
+        return orderQueue.front();
+    }
+    
+    sellOrderLevels.erase(price);
+    sellOrders.pop();
+
+    return nullptr;
+}
+
+void OrderBook::printOrderBook() {
+    std::cout << "Buy Orders:\n";
+    for (const auto& [price, queue] : buyOrderLevels) {
+        // make a copy of the queue so we don’t modify the real book
+        auto tmp = queue;
+        long totalVol = 0;
+        while (!tmp.empty()) {
+            totalVol += tmp.front()->getVolume();
+            tmp.pop();
+        }
+        std::cout << "  Price: " << price
+                  << ", Volume: " << totalVol
+                  << " (orders: " << queue.size() << ")\n";
+    }
+    
+    std::cout << "Sell Orders:\n";
+    for (const auto& [price, queue] : sellOrderLevels) {
+        auto tmp = queue;
+        long totalVol = 0;
+        while (!tmp.empty()) {
+            totalVol += tmp.front()->getVolume();
+            tmp.pop();
+        }
+        std::cout << "  Price: " << price
+                  << ", Volume: " << totalVol
+                  << " (orders: " << queue.size() << ")\n";
+    }
+}

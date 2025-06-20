@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include <iostream>
 
 #include "Order.hpp"
 
@@ -23,8 +24,12 @@ class OrderBook {
         bool isBuyEmpty() const;
         double getBestBuyPrice() const;
         double getBestSellPrice() const;
+        std::shared_ptr<Order> showTopBuyOrder(double price);
+        std::shared_ptr<Order> showTopSellOrder(double price);
         void removeTopBuyOrder();
         void removeTopSellOrder();
+        void printOrderBook();
+
 };
 
 #endif

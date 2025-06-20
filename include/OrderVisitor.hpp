@@ -4,13 +4,13 @@
 #include "Order.hpp"
 
 class LimitOrder;
-class MarketOrder;
+class FokOrder;
 
 class OrderVisitor {
 public:
-    virtual void visit(const LimitOrder& order) = 0;
-    virtual void visit(const MarketOrder& order) = 0;
     virtual ~OrderVisitor() = default;
+    virtual void visit(const LimitOrder& order) = 0;
+    virtual void visit(const FokOrder& order) = 0;
 };
 
 #endif
